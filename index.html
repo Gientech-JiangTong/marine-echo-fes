@@ -219,6 +219,12 @@ html.bot-dragging #gptbase-bubble-window{pointer-events:none}
 #botResizer:hover::after,#botResizer:focus-visible::after,html.bot-dragging #botResizer::after{background:var(--pink)}
 #botResizer:focus-visible{outline:none}
 html.bot-split #botResizer{display:block}
+/* overlay mode (wide screens): keep the floating window below the header, user-resizable from its top-left corner */
+html.bot-overlay #gptbase-bubble-window{width:var(--bot-ow)!important;height:var(--bot-oh)!important;max-height:none!important}
+#botCorner{display:none;position:fixed;width:22px;height:22px;z-index:1000000001;cursor:nwse-resize;touch-action:none;border-radius:50%;background:#7c3aed;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.4);color:#fff;font-size:12px;line-height:18px;text-align:center}
+#botCorner:hover,#botCorner:focus-visible{background:#6d28d9;outline:none;transform:scale(1.1)}
+html.bot-overlay #botCorner{display:block}
+html.bot-dragging.bot-overlay,html.bot-dragging.bot-overlay *{cursor:nwse-resize!important}
 html.bot-split body{margin-right:var(--bot-w)}
 html.bot-split header{right:var(--bot-w)}
 html.bot-split .modal{right:var(--bot-w)}
@@ -834,11 +840,22 @@ renderLineup(); renderTT();
     get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
     set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} },
   };
-  const DEFAULT_W = 420;
+  const DEFAULT_W = 420, HEADER = 64, GAP = 12;
   let mode = store.get('sef-bot-mode') === 'split' ? 'split' : 'overlay';
   let botW = +store.get('sef-bot-w') || DEFAULT_W;
   const clampW = w => Math.round(Math.min(Math.max(w, 340), innerWidth * 0.6));
   const applyW = () => root.style.setProperty('--bot-w', clampW(botW) + 'px');
+  // overlay window size: width/height, 0 = default (458px wide, full height between header and bubble)
+  let ow = +store.get('sef-bot-ow') || 0, oh = +store.get('sef-bot-oh') || 0;
+  const frameBottom = () => { const f = frame(); return f ? innerHeight - f.getBoundingClientRect().bottom : 82; };
+  const maxOH = () => innerHeight - HEADER - GAP - frameBottom();
+  const maxOW = () => Math.min(900, innerWidth - 120);
+  const clampOW = w => Math.round(Math.min(Math.max(w || 458, 340), maxOW()));
+  const clampOH = h => Math.round(Math.min(Math.max(h || Infinity, 360), maxOH()));
+  const applyO = () => {
+    root.style.setProperty('--bot-ow', clampOW(ow) + 'px');
+    root.style.setProperty('--bot-oh', clampOH(oh) + 'px');
+  };
   const frame = () => document.getElementById('gptbase-bubble-window');
   const relayout = () => dispatchEvent(new Event('resize')); // canvas, plugin etc. re-measure
 
@@ -848,7 +865,11 @@ renderLineup(); renderTT();
   handle.id = 'botResizer'; handle.tabIndex = 0;
   handle.setAttribute('role', 'separator'); handle.setAttribute('aria-orientation', 'vertical');
   handle.title = 'ドラッグで幅を調整（ダブルクリックで元に戻す）';
-  document.body.append(btn, handle);
+  const corner = document.createElement('div');
+  corner.id = 'botCorner'; corner.tabIndex = 0; corner.textContent = '⤡';
+  corner.setAttribute('role', 'button');
+  corner.title = 'ドラッグでチャット画面の大きさを調整（ダブルクリックで元に戻す）';
+  document.body.append(btn, handle, corner);
 
   let open = false, split = null;
   function placeBtn(){
@@ -857,12 +878,15 @@ renderLineup(); renderTT();
     btn.textContent = split ? '⧉ 重ねて表示' : '◧ 分割表示';
     btn.title = split ? 'チャットをページに重ねて表示します' : 'ページとチャットを左右に並べて表示します';
     const r = frame().getBoundingClientRect();
-    btn.style.top = (split ? 76 : Math.max(76, r.top + 8)) + 'px'; // always below the 64px header
+    btn.style.top = (split ? 76 : Math.max(76, r.top + 18)) + 'px'; // always below the 64px header
     btn.style.left = Math.max(8, r.left - btn.offsetWidth - 8) + 'px';
+    if(!split){ corner.style.left = (r.left - 11) + 'px'; corner.style.top = (r.top - 11) + 'px'; }
   }
   function sync(){
     const f = frame();
     open = !!f && f.style.display !== 'none';
+    root.classList.toggle('bot-overlay', open && wide.matches && mode !== 'split');
+    applyO();
     const s = open && wide.matches && mode === 'split';
     if(s !== split){
       split = s;
@@ -901,6 +925,31 @@ renderLineup(); renderTT();
     if(e.key === 'ArrowRight'){ e.preventDefault(); setW(clampW(botW) - 40); }
   });
 
+  // overlay: drag the top-left corner to resize (the window stays anchored bottom-right)
+  corner.addEventListener('pointerdown', e => {
+    e.preventDefault();
+    corner.setPointerCapture(e.pointerId);
+    root.classList.add('bot-dragging');
+    const r = frame().getBoundingClientRect();
+    const move = ev => { ow = r.right - ev.clientX; oh = r.bottom - ev.clientY; applyO(); placeBtn(); };
+    const up = () => {
+      corner.removeEventListener('pointermove', move);
+      root.classList.remove('bot-dragging');
+      ow = clampOW(ow); oh = clampOH(oh);
+      store.set('sef-bot-ow', ow); store.set('sef-bot-oh', oh);
+      placeBtn();
+    };
+    corner.addEventListener('pointermove', move);
+    corner.addEventListener('pointerup', up, {once:true});
+    corner.addEventListener('pointercancel', up, {once:true});
+  });
+  const setO = (w, h) => { ow = w; oh = h; applyO(); store.set('sef-bot-ow', ow); store.set('sef-bot-oh', oh); placeBtn(); };
+  corner.addEventListener('dblclick', () => setO(0, 0));
+  corner.addEventListener('keydown', e => {
+    const step = 40, d = {ArrowLeft:[step,0], ArrowRight:[-step,0], ArrowUp:[0,step], ArrowDown:[0,-step]}[e.key];
+    if(d){ e.preventDefault(); setO(clampOW(ow) + d[0], clampOH(oh) + d[1]); }
+  });
+
   function watch(){
     const f = frame();
     if(f && !f.dataset.splitWatch){
@@ -911,7 +960,7 @@ renderLineup(); renderTT();
   }
   new MutationObserver(watch).observe(document.body, {childList:true});
   wide.addEventListener('change', sync);
-  addEventListener('resize', () => { applyW(); placeBtn(); });
+  addEventListener('resize', () => { applyW(); applyO(); placeBtn(); });
   applyW();
   watch();
 })();
