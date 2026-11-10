@@ -857,7 +857,7 @@ renderLineup(); renderTT();
     btn.textContent = split ? '⧉ 重ねて表示' : '◧ 分割表示';
     btn.title = split ? 'チャットをページに重ねて表示します' : 'ページとチャットを左右に並べて表示します';
     const r = frame().getBoundingClientRect();
-    btn.style.top = (split ? 76 : Math.max(8, r.top + 8)) + 'px';
+    btn.style.top = (split ? 76 : Math.max(76, r.top + 8)) + 'px'; // always below the 64px header
     btn.style.left = Math.max(8, r.left - btn.offsetWidth - 8) + 'px';
   }
   function sync(){
