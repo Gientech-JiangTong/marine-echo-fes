@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STARLIGHT ECHO FES 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0b1f; --bg2:#16133a; --card:#1e1a4a; --line:#2f2a6b;
+  --text:#f5f3ff; --muted:#a9a3d6;
+  --pink:#ff3d8b; --yellow:#ffd23f; --cyan:#22e4ff; --green:#5dff9d; --orange:#ff8a3d;
+  --radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:"Noto Sans JP",system-ui,sans-serif;line-height:1.7;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.en{font-family:"Bebas Neue",Impact,sans-serif;letter-spacing:.04em}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+/* header */
+header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(13,11,31,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-size:28px;line-height:1;background:linear-gradient(90deg,var(--pink),var(--yellow),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+nav ul{display:flex;gap:26px;list-style:none}
+nav a{font-size:20px;color:var(--muted);transition:.2s}
+nav a:hover{color:var(--yellow)}
+.btn{display:inline-block;padding:10px 22px;border-radius:999px;font-weight:900;background:var(--pink);color:#fff;transition:.2s;border:none;cursor:pointer;font-family:inherit;font-size:15px}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,61,139,.45)}
+.btn.ghost{background:transparent;border:2px solid var(--text)}
+.menu-btn{display:none;background:none;border:none;color:var(--text);font-size:28px;cursor:pointer}
+
+/* hero */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:110px 0 60px}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%}
+.hero::after{content:"";position:absolute;inset:auto 0 0 0;height:200px;background:linear-gradient(transparent,var(--bg))}
+.hero .wrap{position:relative;z-index:2;text-align:center;width:100%}
+.hero .tag{display:inline-block;padding:4px 16px;border:1px solid var(--cyan);color:var(--cyan);border-radius:999px;font-size:14px;margin-bottom:18px}
+.hero h1{font-size:clamp(64px,13vw,170px);line-height:.88;font-weight:400}
+.hero h1 span{display:block}
+.hero h1 .l1{color:var(--yellow)}
+.hero h1 .l2{background:linear-gradient(90deg,var(--pink),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h1 .l3{font-size:.45em;color:var(--cyan)}
+.hero .date{font-size:clamp(26px,4vw,44px);margin-top:18px}
+.hero .venue{color:var(--muted);margin-top:4px}
+.countdown{display:flex;justify-content:center;gap:14px;margin:32px 0}
+.countdown div{background:rgba(30,26,74,.75);border:1px solid var(--line);border-radius:14px;padding:10px 0;width:88px}
+.countdown b{display:block;font-size:44px;line-height:1;font-family:"Bebas Neue";color:var(--yellow)}
+.countdown small{color:var(--muted);font-size:12px}
+.hero .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* marquee */
+.marquee{background:var(--yellow);color:var(--bg);overflow:hidden;white-space:nowrap;padding:10px 0;transform:rotate(-1.5deg);margin:20px -10px}
+.marquee div{display:inline-block;animation:mq 30s linear infinite;font-size:30px}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* sections */
+section{padding:90px 0}
+.sec-title{display:flex;align-items:baseline;gap:16px;margin-bottom:36px;flex-wrap:wrap}
+.sec-title h2{font-size:clamp(52px,8vw,88px);line-height:1;font-weight:400}
+.sec-title p{color:var(--muted);font-weight:700}
+
+/* news */
+.news{list-style:none;border-top:1px solid var(--line)}
+.news li{display:flex;gap:20px;padding:18px 4px;border-bottom:1px solid var(--line);align-items:center;cursor:pointer;transition:.2s}
+.news li:hover{background:var(--bg2);padding-left:14px}
+.news time{font-family:"Bebas Neue";font-size:22px;color:var(--cyan);min-width:110px}
+.news .cat{font-size:12px;padding:2px 10px;border-radius:6px;background:var(--pink);font-weight:700;white-space:nowrap}
+.news .cat.t{background:var(--green);color:var(--bg)}
+.news .cat.g{background:var(--orange)}
+.news .cat.i{background:var(--cyan);color:var(--bg)}
+
+/* tabs */
+.tabs{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap}
+.tab{padding:10px 24px;border-radius:999px;border:2px solid var(--line);background:none;color:var(--muted);cursor:pointer;font-family:"Bebas Neue";font-size:24px;line-height:1.2;transition:.2s}
+.tab small{font-family:"Noto Sans JP";font-size:12px;margin-left:6px}
+.tab.active{border-color:var(--yellow);background:var(--yellow);color:var(--bg)}
+
+/* lineup */
+.lineup{text-align:center;background:var(--bg2);border-radius:var(--radius);padding:44px 24px;border:1px solid var(--line)}
+.lineup .head{font-size:clamp(38px,6vw,68px);line-height:1.1;color:var(--yellow)}
+.lineup .mid{font-size:clamp(26px,3.6vw,40px);line-height:1.3;margin-top:14px}
+.lineup .low{font-size:clamp(18px,2.4vw,26px);line-height:1.5;margin-top:14px;color:var(--muted)}
+.lineup .sep{color:var(--pink);margin:0 .35em}
+.lineup .artist{cursor:pointer;transition:.15s}
+.lineup .artist:hover{color:var(--cyan)}
+.lineup .more{margin-top:22px;font-size:13px;color:var(--muted)}
+
+/* timetable */
+.tt-note{color:var(--muted);font-size:14px;margin-bottom:14px}
+.tt-scroll{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--line);background:var(--bg2)}
+.tt{display:grid;grid-template-columns:64px repeat(4,minmax(190px,1fr));min-width:830px;position:relative}
+.tt .stage-h{position:sticky;top:0;padding:14px 8px;text-align:center;font-family:"Bebas Neue";font-size:24px;line-height:1.1;border-bottom:1px solid var(--line)}
+.tt .stage-h small{display:block;font-family:"Noto Sans JP";font-size:11px;color:var(--muted)}
+.tt .col{position:relative;border-left:1px solid var(--line)}
+.tt .times{position:relative}
+.tt .times span{position:absolute;left:0;right:0;text-align:center;font-family:"Bebas Neue";font-size:18px;color:var(--muted);transform:translateY(-50%)}
+.tt .hour-line{position:absolute;left:0;right:0;border-top:1px dashed rgba(169,163,214,.15)}
+.slot{position:absolute;left:6px;right:6px;border-radius:10px;padding:6px 10px;color:var(--bg);cursor:pointer;overflow:hidden;transition:.15s;border:2px solid transparent}
+.slot:hover{filter:brightness(1.1);transform:scale(1.02)}
+.slot .t{font-family:"Bebas Neue";font-size:15px;opacity:.75;line-height:1.2}
+.slot .n{font-weight:900;font-size:14px;line-height:1.25}
+.slot .fav{position:absolute;right:8px;top:4px;font-size:16px;opacity:.35}
+.slot.on{border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.25)}
+.slot.on .fav{opacity:1}
+.my-tt{margin-top:18px;padding:18px 22px;border-radius:var(--radius);background:var(--card);border:1px solid var(--line)}
+.my-tt h3{font-family:"Bebas Neue";font-weight:400;font-size:26px;color:var(--yellow)}
+.my-tt ul{list-style:none;margin-top:6px}
+.my-tt li{font-size:14px;padding:4px 0;border-bottom:1px dashed var(--line)}
+.my-tt li.clash{color:var(--orange)}
+.my-tt .empty{color:var(--muted);font-size:14px}
+
+/* tickets */
+.tickets{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.ticket{background:var(--card);border-radius:var(--radius);padding:28px 24px;border:1px solid var(--line);position:relative;overflow:hidden;transition:.2s}
+.ticket:hover{transform:translateY(-4px);border-color:var(--pink)}
+.ticket::before{content:"";position:absolute;inset:0 0 auto 0;height:6px;background:var(--c,var(--pink))}
+.ticket h3{font-family:"Bebas Neue";font-weight:400;font-size:34px;line-height:1.1}
+.ticket .sub{color:var(--muted);font-size:13px}
+.ticket .price{font-family:"Bebas Neue";font-size:48px;color:var(--c,var(--pink));margin:12px 0 4px}
+.ticket .price small{font-size:20px}
+.ticket ul{list-style:none;font-size:14px;color:var(--muted);margin-bottom:18px}
+.ticket li::before{content:"✦ ";color:var(--c,var(--pink))}
+.ticket .badge{position:absolute;right:16px;top:20px;font-size:11px;font-weight:900;padding:2px 10px;border-radius:6px;background:var(--yellow);color:var(--bg)}
+
+/* access */
+.access{display:grid;grid-template-columns:1.3fr 1fr;gap:28px;align-items:start}
+.map{background:var(--bg2);border-radius:var(--radius);border:1px solid var(--line);padding:16px}
+.map svg{width:100%;height:auto;display:block}
+.map .zone{cursor:pointer;transition:.2s}
+.map .zone:hover{filter:brightness(1.3)}
+.info dl{display:grid;grid-template-columns:90px 1fr;gap:12px 16px;font-size:15px}
+.info dt{color:var(--cyan);font-weight:700}
+.zone-desc{margin-top:22px;background:var(--card);border-radius:14px;padding:16px 18px;border-left:4px solid var(--yellow);min-height:90px;font-size:14px}
+.zone-desc b{color:var(--yellow)}
+
+/* faq */
+.faq details{border-bottom:1px solid var(--line);padding:18px 4px}
+.faq summary{cursor:pointer;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:12px}
+.faq summary::after{content:"+";color:var(--pink);font-size:22px;line-height:1}
+.faq details[open] summary::after{content:"−"}
+.faq details p{color:var(--muted);margin-top:10px;font-size:14px}
+
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
+.modal.show{display:flex}
+.modal .box{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);max-width:440px;width:100%;padding:30px;position:relative;animation:pop .25s}
+@keyframes pop{from{transform:scale(.9);opacity:0}}
+.modal .close{position:absolute;right:14px;top:8px;background:none;border:none;color:var(--muted);font-size:28px;cursor:pointer}
+.modal .avatar{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;font-family:"Bebas Neue";font-size:40px;color:var(--bg);margin-bottom:12px}
+.modal h3{font-family:"Bebas Neue";font-weight:400;font-size:40px;line-height:1.1}
+.modal .meta{color:var(--cyan);font-size:14px;margin:6px 0 12px}
+.modal p{color:var(--muted);font-size:14px}
+
+footer{border-top:1px solid var(--line);padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
+footer .logo{font-size:40px;display:inline-block;margin-bottom:8px}
+
+.reveal{opacity:0;transform:translateY(30px);transition:.7s}
+.reveal.in{opacity:1;transform:none}
+
+@media (max-width:860px){
+  nav{position:fixed;inset:64px 0 auto 0;background:var(--bg);border-bottom:1px solid var(--line);display:none}
+  nav.open{display:block}
+  nav ul{flex-direction:column;gap:0;padding:8px 20px}
+  nav li a{display:block;padding:10px 0;font-size:26px}
+  .menu-btn{display:block}
+  header .btn{display:none}
+  .access{grid-template-columns:1fr}
+  .countdown div{width:70px}
+  .countdown b{font-size:34px}
+  .news li{flex-wrap:wrap;gap:6px 12px}
+  .news time{min-width:auto}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a href="#top" class="logo en">STARLIGHT ECHO</a>
+    <nav id="nav"><ul>
+      <li><a class="en" href="#news">NEWS</a></li>
+      <li><a class="en" href="#lineup">LINE UP</a></li>
+      <li><a class="en" href="#timetable">TIMETABLE</a></li>
+      <li><a class="en" href="#ticket">TICKET</a></li>
+      <li><a class="en" href="#access">ACCESS</a></li>
+      <li><a class="en" href="#faq">FAQ</a></li>
+    </ul></nav>
+    <a href="#ticket" class="btn">チケット購入</a>
+    <button class="menu-btn" id="menuBtn" aria-label="メニュー">☰</button>
+  </div>
+</header>
+
+<div class="hero" id="top">
+  <canvas id="stars"></canvas>
+  <div class="wrap">
+    <div class="tag">OUTDOOR MUSIC FESTIVAL IN CHIBA · 第3回</div>
+    <h1 class="en"><span class="l1">STARLIGHT</span><span class="l2">ECHO FES</span><span class="l3">2027</span></h1>
+    <div class="date en">2027.5.3 MON — 5.5 WED</div>
+    <div class="venue">千葉市蘇我スポーツ公園（千葉県千葉市中央区）｜ 雨天決行</div>
+    <div class="countdown" id="countdown">
+      <div><b id="cd-d">--</b><small>DAYS</small></div>
+      <div><b id="cd-h">--</b><small>HOURS</small></div>
+      <div><b id="cd-m">--</b><small>MIN</small></div>
+      <div><b id="cd-s">--</b><small>SEC</small></div>
+    </div>
+    <div class="cta">
+      <a href="#lineup" class="btn">出演アーティストを見る</a>
+      <a href="#timetable" class="btn ghost">マイタイムテーブルを作る</a>
+    </div>
+  </div>
+</div>
+
+<div class="marquee"><div class="en" id="marquee"></div></div>
+
+<section id="news" class="reveal">
+  <div class="wrap">
+    <div class="sec-title"><h2 class="en">NEWS</h2><p>最新情報</p></div>
+    <ul class="news" id="newsList"></ul>
+  </div>
+</section>
+
+<section id="lineup" class="reveal">
+  <div class="wrap">
+    <div class="sec-title"><h2 class="en">LINE UP</h2><p>出演アーティスト（日別）</p></div>
+    <div class="tabs" data-for="lineup"></div>
+    <div class="lineup" id="lineupBox"></div>
+  </div>
+</section>
+
+<section id="timetable" class="reveal">
+  <div class="wrap">
+    <div class="sec-title"><h2 class="en">TIMETABLE</h2><p>タイムテーブル</p></div>
+    <div class="tabs" data-for="tt"></div>
+    <p class="tt-note">★ ステージをクリックすると「マイタイムテーブル」に追加されます。時間が重なる場合はオレンジ色で表示（お使いのブラウザに保存されます）。</p>
+    <div class="tt-scroll"><div class="tt" id="tt"></div></div>
+    <div class="my-tt"><h3>MY TIMETABLE</h3><ul id="myList"></ul></div>
+  </div>
+</section>
+
+<section id="ticket" class="reveal">
+  <div class="wrap">
+    <div class="sec-title"><h2 class="en">TICKET</h2><p>チケット情報（デモページのため、実際の購入・決済は発生しません）</p></div>
+    <div class="tickets" id="tickets"></div>
+  </div>
+</section>
+
+<section id="access" class="reveal">
+  <div class="wrap">
+    <div class="sec-title"><h2 class="en">ACCESS / MAP</h2><p>会場マップ · エリアをクリックして詳細を表示</p></div>
+    <div class="access">
+      <div class="map">
+        <svg viewBox="0 0 600 420" aria-label="会場マップ">
+          <rect width="600" height="420" fill="#0d0b1f" rx="12"/>
+          <!-- Tokyo Bay -->
+          <path d="M0 12 Q0 0 12 0 L70 0 C60 120 85 260 62 420 L12 420 Q0 420 0 408Z" fill="#163a6e"/>
+          <text x="30" y="215" text-anchor="middle" font-size="14" fill="#7fb6ff" writing-mode="tb" letter-spacing="6">東京湾</text>
+          <!-- Park -->
+          <rect x="82" y="22" width="430" height="376" rx="22" fill="#1d3b33" stroke="#3f7a5f" stroke-width="2"/>
+          <text x="297" y="44" text-anchor="middle" font-size="12" fill="#8fd1ad">千葉市蘇我スポーツ公園</text>
+          <path d="M200 112 L297 208 L400 112 M140 292 L297 208 L330 300 M297 208 L485 320" stroke="#a9a3d6" stroke-dasharray="5 6" fill="none" opacity=".45"/>
+          <g class="zone" data-z="sky"><circle cx="200" cy="112" r="52" fill="#ffd23f"/><text x="200" y="118" text-anchor="middle" font-family="Bebas Neue" font-size="22" fill="#0d0b1f">SKY STAGE</text></g>
+          <g class="zone" data-z="forest"><circle cx="400" cy="112" r="44" fill="#5dff9d"/><text x="400" y="118" text-anchor="middle" font-family="Bebas Neue" font-size="19" fill="#0d0b1f">FOREST STAGE</text></g>
+          <g class="zone" data-z="ocean"><circle cx="140" cy="300" r="44" fill="#22e4ff"/><text x="140" y="306" text-anchor="middle" font-family="Bebas Neue" font-size="19" fill="#0d0b1f">OCEAN STAGE</text></g>
+          <g class="zone" data-z="moon"><circle cx="320" cy="320" r="40" fill="#ff3d8b"/><text x="320" y="326" text-anchor="middle" font-family="Bebas Neue" font-size="18" fill="#fff">MOON TENT</text></g>
+          <g class="zone" data-z="food"><rect x="170" y="190" width="80" height="36" rx="8" fill="#ff8a3d"/><text x="210" y="213" text-anchor="middle" font-family="Bebas Neue" font-size="16" fill="#0d0b1f">FOOD PARK</text></g>
+          <g class="zone" data-z="goods"><rect x="262" y="190" width="70" height="36" rx="8" fill="#b18cff"/><text x="297" y="213" text-anchor="middle" font-family="Bebas Neue" font-size="16" fill="#0d0b1f">GOODS</text></g>
+          <g class="zone" data-z="cloak"><rect x="344" y="190" width="70" height="36" rx="8" fill="#a9a3d6"/><text x="379" y="213" text-anchor="middle" font-family="Bebas Neue" font-size="16" fill="#0d0b1f">CLOAK</text></g>
+          <g class="zone" data-z="gate"><rect x="430" y="302" width="94" height="38" rx="8" fill="#f5f3ff"/><text x="477" y="327" text-anchor="middle" font-family="Bebas Neue" font-size="18" fill="#0d0b1f">ENTRY GATE</text></g>
+          <!-- outside -->
+          <g class="zone" data-z="parking"><rect x="524" y="30" width="66" height="44" rx="8" fill="#2f2a6b" stroke="#a9a3d6"/><text x="557" y="58" text-anchor="middle" font-size="13" font-weight="700" fill="#f5f3ff">P 駐車場</text></g>
+          <path d="M557 370 C540 360 535 340 524 330" stroke="#ffd23f" stroke-width="3" stroke-dasharray="4 5" fill="none"/>
+          <g class="zone" data-z="station"><rect x="526" y="364" width="66" height="44" rx="8" fill="#ffd23f"/><text x="559" y="384" text-anchor="middle" font-size="12" font-weight="900" fill="#0d0b1f">JR蘇我駅</text><text x="559" y="400" text-anchor="middle" font-size="10" fill="#0d0b1f">徒歩約15分</text></g>
+        </svg>
+      </div>
+      <div class="info">
+        <dl>
+          <dt>会場</dt><dd>千葉市蘇我スポーツ公園（千葉県千葉市中央区）</dd>
+          <dt>時間</dt><dd>各日 開場 9:00 / 開演 11:00 / 終演 21:00（予定）</dd>
+          <dt>電車</dt><dd>JR京葉線・内房線・外房線「蘇我駅」西口から徒歩約15分</dd>
+          <dt>バス</dt><dd>JR「千葉駅」から臨時シャトルバス運行予定（有料）</dd>
+          <dt>お車</dt><dd>駐車券の事前購入が必要です（当日販売なし）。公共交通機関のご利用にご協力ください</dd>
+        </dl>
+        <div class="zone-desc" id="zoneDesc">👆 左のマップのエリアをクリックすると、各ステージ・施設の紹介が表示されます。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="reveal">
+  <div class="wrap">
+    <div class="sec-title"><h2 class="en">FAQ</h2><p>よくある質問</p></div>
+    <div class="faq" id="faqList"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo en">STARLIGHT ECHO FES 2027</div>
+  <p>本サイトは架空の音楽フェスのデモページです。アーティスト・料金・イベント内容はすべて架空のもので、実在の会場・団体とは関係ありません。</p>
+  <p class="en" style="margin-top:6px;font-size:16px">© 2027 STARLIGHT ECHO PROJECT</p>
+</footer>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <button class="close" id="modalClose" aria-label="閉じる">×</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+/* ===== Data (all fictional) ===== */
+const START = new Date('2027-05-03T11:00:00+09:00');
+const DAYS = [
+  {id:'d1', label:'5.3', dow:'MON'},
+  {id:'d2', label:'5.4', dow:'TUE'},
+  {id:'d3', label:'5.5', dow:'WED'},
+];
+const STAGES = [
+  {id:'sky',    name:'SKY STAGE',    sub:'メインステージ', color:'#ffd23f'},
+  {id:'ocean',  name:'OCEAN STAGE',  sub:'海辺のステージ', color:'#22e4ff'},
+  {id:'forest', name:'FOREST STAGE', sub:'森のステージ',   color:'#5dff9d'},
+  {id:'moon',   name:'MOON TENT',    sub:'夜のテント',     color:'#ff3d8b'},
+];
+const GENRES = ['Rock','Pop','Electro','Hip-Hop','Indie','City Pop','Metal','Punk','Jazz Fusion','Shoegaze','J-Pop','Dream Pop'];
+// [name, stage, start, end, tier]  tier 1=headliner 2=mid 3=low
+const SET = {
+  d1:[
+    ['NEON PARADOX','sky',19.5,21,1],['ブルーホライズン','sky',17.5,18.75,1],['KITE RUNNERS','sky',15.5,16.5,2],['ORBITAL FLOWERS','sky',13.5,14.5,2],['朝焼けシンドローム','sky',11.5,12.5,3],
+    ['SALT & CITRUS','ocean',18.5,19.5,2],['LUNAR TIDE','ocean',16.5,17.5,2],['PIXEL GHOSTS','ocean',14.5,15.25,3],['かもめ計画','ocean',12.5,13.25,3],['HELLO SUNDAY','ocean',11,11.75,3],
+    ['MOSSY BEATS','forest',19,20,2],['THE PAPER TIGERS','forest',17,17.75,3],['いちょうラジオ','forest',15,15.75,3],['FERN & FOX','forest',13,13.75,3],
+    ['DJ COMET','moon',20,21,2],['AFTERGLOW CLUB','moon',18,19,3],['MIDNIGHT CANDY','moon',16,16.75,3],['808 PENGUIN','moon',14,14.75,3],
+  ],
+  d2:[
+    ['CRIMSON VELOCITY','sky',19.5,21,1],['Sora no Oto','sky',17.5,18.75,1],['THUNDERBIRD 99','sky',15.5,16.5,2],['GLASS MOUNTAIN','sky',13.5,14.5,2],['未来邮便局','sky',11.5,12.5,3],
+    ['PEACH RADIO','ocean',18.5,19.5,2],['COBALT SKATERS','ocean',16.5,17.5,2],['NIGHT BUS','ocean',14.5,15.25,3],['WAVY GRAVY','ocean',12.5,13.25,3],['ソーダ水バンド','ocean',11,11.75,3],
+    ['STATIC BLOOM','forest',19,20,2],['YELLOW SUBMARINE KIDS','forest',17,17.75,3],['NORTH LIGHTS','forest',15,15.75,3],['MAPLE SYRUP','forest',13,13.75,3],
+    ['DJ AURORA','moon',20,21,2],['VAPOR MALL','moon',18,19,3],['BYTE & BASS','moon',16,16.75,3],['ROBO LULLABY','moon',14,14.75,3],
+  ],
+  d3:[
+    ['STARLIGHT ALL STARS','sky',19.5,21,1],['ECHO CHAMBER','sky',17.5,18.75,1],['ROCKET GIRLS','sky',15.5,16.5,2],['夏のゆうれい','sky',13.5,14.5,2],['MORNING GLORY','sky',11.5,12.5,3],
+    ['TANGERINE DREAMERS','ocean',18.5,19.5,2],['HOLOGRAM HEART','ocean',16.5,17.5,2],['SEA GLASS','ocean',14.5,15.25,3],['CLOUD NINE','ocean',12.5,13.25,3],['ほたる合唱団','ocean',11,11.75,3],
+    ['WILD ORCHID','forest',19,20,2],['BAMBOO ROCKETS','forest',17,17.75,3],['TWILIGHT POST','forest',15,15.75,3],['LITTLE GIANT','forest',13,13.75,3],
+    ['DJ SUPERNOVA','moon',20,21,2],['CHERRY BOMB 3000','moon',18,19,3],['NEON NOODLE','moon',16,16.75,3],['MOCHI MACHINE','moon',14,14.75,3],
+  ],
+};
+const NEWS = [
+  ['2026.11.10','tk','3日通し券・1日券 オフィシャル先行受付スタート！'],
+  ['2026.11.05','la','出演アーティスト第3弾発表：CRIMSON VELOCITY、STARLIGHT ALL STARS ほか12組が決定'],
+  ['2026.10.28','in','会場アクセス情報公開：JR蘇我駅からの徒歩ルート＆千葉駅発シャトルバス'],
+  ['2026.10.20','gd','オフィシャルグッズ第1弾：フェスTシャツ・タオル・ラバーバンドの事前通販スタート'],
+  ['2026.10.15','la','出演アーティスト第2弾発表：初日のトリは NEON PARADOX に決定'],
+  ['2026.10.01','la','STARLIGHT ECHO FES 2027 千葉市蘇我スポーツ公園にて開催決定！'],
+];
+const TICKETS = [
+  {name:'3-DAY PASS',sub:'3日通し券',price:'36,000',c:'var(--pink)',badge:'先行受付中',items:['3日間 全ステージ入場','当日再入場OK（リストバンド制）','通し券限定ラバーバンド付き']},
+  {name:'1-DAY PASS',sub:'1日券（日付指定）',price:'13,500',c:'var(--yellow)',items:['当日 全ステージ入場','当日再入場OK（リストバンド制）']},
+  {name:'PREMIUM',sub:'プレミアムエリア付き1日券',price:'22,000',c:'var(--cyan)',badge:'数量限定',items:['1日券の全特典','専用休憩テント・専用トイレ','SKY STAGE 横の専用観覧エリア']},
+  {name:'PARKING',sub:'駐車券（1日・1台）',price:'4,000',c:'var(--green)',items:['会場周辺の指定駐車場を利用可','事前購入制（当日販売なし）','別途入場チケットが必要']},
+];
+const ZONES = {
+  sky:['SKY STAGE','メインステージ。広い芝生エリアで最大3万人が観覧可能。トリのライブと最終日の花火はここで！'],
+  ocean:['OCEAN STAGE','東京湾からの海風が気持ちいい海側のステージ。夕暮れ時のライブが一番人気。'],
+  forest:['FOREST STAGE','木々に囲まれた小さめのステージ。インディーバンドや次世代アーティストが集結。'],
+  moon:['MOON TENT','屋根付きの大型テントステージ。夜はDJ・エレクトロ中心。雨の日も安心。'],
+  food:['FOOD PARK','千葉のご当地グルメを含む約50店舗が出店。休憩用のテーブル席もあります。'],
+  goods:['GOODS','オフィシャルグッズ売場。混雑が予想されるため事前通販もご利用ください。'],
+  cloak:['CLOAK','クローク。大きな荷物はこちらでお預かり（有料・当日先着順）。'],
+  gate:['ENTRY GATE','入場ゲート。チケットを提示してリストバンドを受け取ってください。'],
+  station:['JR蘇我駅','JR京葉線・内房線・外房線「蘇我駅」。西口から会場まで徒歩約15分。帰りは駅が大変混雑します。'],
+  parking:['P 駐車場','指定駐車場。駐車券を事前に購入した方のみ利用できます。'],
+};
+const FAQ = [
+  ['雨が降っても開催しますか？','雨天決行です（荒天の場合は中止になることがあります）。レインコートをお持ちください。周りの方の視界を遮るため、傘のご使用はご遠慮ください。'],
+  ['再入場はできますか？','リストバンドを着用していれば、当日に限り何度でも再入場できます。'],
+  ['会場までどうやって行けばいいですか？','JR「蘇我駅」西口から徒歩約15分です。千葉駅から臨時シャトルバスも運行予定です。お車の場合は駐車券の事前購入が必要です。'],
+  ['子どもも入場できますか？','小学生以下は保護者同伴に限り入場無料です（中学生以上はチケットが必要です）。'],
+  ['飲食物の持ち込みはできますか？','ペットボトル・水筒のみ持ち込み可能です。お食事は会場内の FOOD PARK をご利用ください。'],
+  ['チケットの払い戻しはできますか？','本サイトは架空のフェスのデモページのため、実際の購入・決済は一切発生しません。'],
+];
+
+/* ===== Helpers ===== */
+const $ = s => document.querySelector(s);
+const fmt = h => `${Math.floor(h)}:${String(Math.round((h%1)*60)).padStart(2,'0')}`;
+const stageOf = id => STAGES.find(s=>s.id===id);
+let favs = new Set();
+try{ favs = new Set(JSON.parse(localStorage.getItem('sef-favs')||'[]')); }catch(e){}
+const saveFavs = () => { try{ localStorage.setItem('sef-favs', JSON.stringify([...favs])); }catch(e){} };
+const keyOf = (d,a) => `${d}|${a[0]}`;
+function hash(str){let h=0;for(const c of str)h=(h*31+c.charCodeAt(0))>>>0;return h;}
+
+/* ===== Countdown ===== */
+function tick(){
+  let diff = Math.max(0, START - Date.now());
+  const d=Math.floor(diff/864e5), h=Math.floor(diff/36e5)%24, m=Math.floor(diff/6e4)%60, s=Math.floor(diff/1e3)%60;
+  $('#cd-d').textContent=d; $('#cd-h').textContent=String(h).padStart(2,'0');
+  $('#cd-m').textContent=String(m).padStart(2,'0'); $('#cd-s').textContent=String(s).padStart(2,'0');
+}
+tick(); setInterval(tick,1000);
+
+/* ===== Marquee ===== */
+const allNames = Object.values(SET).flat().filter(a=>a[4]<=2).map(a=>a[0]);
+const mqText = allNames.join('  ★  ') + '  ★  ';
+$('#marquee').textContent = mqText + mqText;
+
+/* ===== News ===== */
+const catMap = {la:['LINE UP',''],tk:['TICKET','t'],gd:['GOODS','g'],in:['INFO','i']};
+$('#newsList').innerHTML = NEWS.map(([d,c,t])=>`<li><time>${d}</time><span class="cat ${catMap[c][1]}">${catMap[c][0]}</span><span>${t}</span></li>`).join('');
+
+/* ===== Tabs ===== */
+let curLineup='d1', curTT='d1';
+document.querySelectorAll('.tabs').forEach(box=>{
+  box.innerHTML = DAYS.map((d,i)=>`<button class="tab${i?'':' active'}" data-d="${d.id}">${d.label}<small>${d.dow}</small></button>`).join('');
+  box.addEventListener('click',e=>{
+    const b=e.target.closest('.tab'); if(!b) return;
+    box.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t===b));
+    if(box.dataset.for==='lineup'){curLineup=b.dataset.d;renderLineup();} else {curTT=b.dataset.d;renderTT();}
+  });
+});
+
+/* ===== Lineup ===== */
+function renderLineup(){
+  const acts=SET[curLineup];
+  const row=t=>acts.filter(a=>a[4]===t).map(a=>`<span class="artist" data-a="${a[0]}">${a[0]}</span>`).join('<span class="sep">/</span>');
+  $('#lineupBox').innerHTML = `<div class="head en">${row(1)}</div><div class="mid en">${row(2)}</div><div class="low">${row(3)}</div><div class="more">…and more! アーティスト名をクリックするとプロフィールを表示</div>`;
+}
+$('#lineupBox').addEventListener('click',e=>{const a=e.target.closest('.artist'); if(a) openArtist(curLineup,a.dataset.a);});
+
+/* ===== Timetable ===== */
+const T0=10.5, T1=21.25, PX=84; // px per hour
+function renderTT(){
+  const H=(T1-T0)*PX;
+  let html = `<div class="stage-h"></div>` + STAGES.map(s=>`<div class="stage-h" style="color:${s.color}">${s.name}<small>${s.sub}</small></div>`).join('');
+  let times=''; let lines='';
+  for(let h=Math.ceil(T0); h<=21; h++){
+    const y=(h-T0)*PX;
+    times+=`<span style="top:${y}px">${h}:00</span>`;
+    lines+=`<div class="hour-line" style="top:${y}px"></div>`;
+  }
+  html += `<div class="times" style="height:${H}px">${times}</div>`;
+  STAGES.forEach(s=>{
+    const slots = SET[curTT].filter(a=>a[1]===s.id).map(a=>{
+      const on=favs.has(keyOf(curTT,a));
+      return `<div class="slot${on?' on':''}" data-a="${a[0]}" style="top:${(a[2]-T0)*PX}px;height:${(a[3]-a[2])*PX-4}px;background:${s.color}">
+        <span class="fav">★</span><div class="t">${fmt(a[2])} - ${fmt(a[3])}</div><div class="n">${a[0]}</div></div>`;
+    }).join('');
+    html += `<div class="col" style="height:${H}px">${lines}${slots}</div>`;
+  });
+  $('#tt').innerHTML=html;
+  renderMy();
+}
+$('#tt').addEventListener('click',e=>{
+  const el=e.target.closest('.slot'); if(!el) return;
+  const a=SET[curTT].find(x=>x[0]===el.dataset.a); const k=keyOf(curTT,a);
+  favs.has(k)?favs.delete(k):favs.add(k); saveFavs(); renderTT();
+});
+function renderMy(){
+  const out=[];
+  DAYS.forEach(d=>{
+    const picks=SET[d.id].filter(a=>favs.has(keyOf(d.id,a))).sort((x,y)=>x[2]-y[2]);
+    picks.forEach((a,i)=>{
+      const clash=picks.some((b,j)=>j!==i && a[2]<b[3] && b[2]<a[3]);
+      out.push(`<li class="${clash?'clash':''}">${d.label} ${d.dow}　${fmt(a[2])}-${fmt(a[3])}　<b>${a[0]}</b>　@ ${stageOf(a[1]).name}${clash?'　⚠ 時間が重なっています':''}</li>`);
+    });
+  });
+  $('#myList').innerHTML = out.length ? out.join('') : '<li class="empty" style="border:none">まだ何も選ばれていません。上のタイムテーブルから観たいアーティストをクリックしよう！</li>';
+}
+
+/* ===== Artist modal ===== */
+function openArtist(dayId,name){
+  const a=SET[dayId].find(x=>x[0]===name); const s=stageOf(a[1]); const d=DAYS.find(x=>x.id===dayId);
+  const g=GENRES[hash(name)%GENRES.length]; const yr=2008+hash(name+'y')%16;
+  $('#modalBody').innerHTML=`<div class="avatar" style="background:${s.color}">${[...name][0]}</div>
+    <h3>${name}</h3>
+    <div class="meta">${d.label} ${d.dow} ｜ ${fmt(a[2])} - ${fmt(a[3])} ｜ ${s.name}</div>
+    <p>${yr}年結成の ${g} アーティスト。エネルギッシュなライブパフォーマンスで知られ、今回は STARLIGHT ECHO のためだけの特別なセットリストで蘇我のステージに立ちます。（架空のプロフィールです）</p>
+    <div style="margin-top:18px"><button class="btn" id="addFav">${favs.has(keyOf(dayId,a))?'★ マイタイムテーブルに追加済み':'☆ マイタイムテーブルに追加'}</button></div>`;
+  $('#addFav').onclick=()=>{const k=keyOf(dayId,a); favs.has(k)?favs.delete(k):favs.add(k); saveFavs(); renderTT(); openArtist(dayId,name);};
+  $('#modal').classList.add('show');
+}
+$('#modalClose').onclick=()=>$('#modal').classList.remove('show');
+$('#modal').addEventListener('click',e=>{if(e.target.id==='modal')$('#modal').classList.remove('show');});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')$('#modal').classList.remove('show');});
+
+/* ===== Tickets ===== */
+$('#tickets').innerHTML = TICKETS.map(t=>`<div class="ticket" style="--c:${t.c}">
+  ${t.badge?`<span class="badge">${t.badge}</span>`:''}
+  <h3>${t.name}</h3><div class="sub">${t.sub}</div>
+  <div class="price">¥${t.price}<small> （税込）</small></div>
+  <ul>${t.items.map(i=>`<li>${i}</li>`).join('')}</ul>
+  <button class="btn buy" data-n="${t.sub}">購入する</button></div>`).join('');
+$('#tickets').addEventListener('click',e=>{
+  const b=e.target.closest('.buy'); if(!b) return;
+  $('#modalBody').innerHTML=`<h3>THANK YOU!</h3><p style="margin-top:10px">こちらは架空の音楽フェスのデモページのため、「${b.dataset.n}」の実際の購入・決済は発生しません。🎉<br>蘇我で会いましょう！</p>`;
+  $('#modal').classList.add('show');
+});
+
+/* ===== Map ===== */
+document.querySelectorAll('.zone').forEach(z=>z.addEventListener('click',()=>{
+  const [n,t]=ZONES[z.dataset.z]; $('#zoneDesc').innerHTML=`<b class="en" style="font-size:24px">${n}</b><br>${t}`;
+}));
+
+/* ===== FAQ ===== */
+$('#faqList').innerHTML = FAQ.map(([q,a])=>`<details><summary>Q. ${q}</summary><p>A. ${a}</p></details>`).join('');
+
+/* ===== Mobile nav ===== */
+$('#menuBtn').onclick=()=>$('#nav').classList.toggle('open');
+document.querySelectorAll('#nav a').forEach(a=>a.onclick=()=>$('#nav').classList.remove('open'));
+
+/* ===== Reveal on scroll ===== */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ===== Starfield + light beams ===== */
+const cv=$('#stars'), cx=cv.getContext('2d'); let W,H,stars=[];
+function size(){W=cv.width=cv.offsetWidth*devicePixelRatio;H=cv.height=cv.offsetHeight*devicePixelRatio;
+  stars=Array.from({length:180},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.8*devicePixelRatio,s:Math.random()*.5+.1,p:Math.random()*6}));}
+size(); addEventListener('resize',size);
+const beamColors=['255,61,139','34,228,255','255,210,63','93,255,157'];
+function draw(t){
+  cx.clearRect(0,0,W,H);
+  beamColors.forEach((c,i)=>{
+    const ang=Math.sin(t/1800+i*1.7)*.5, x=W*(.15+i*.23);
+    const g=cx.createLinearGradient(x,H,x+Math.sin(ang)*H,0);
+    g.addColorStop(0,`rgba(${c},.28)`); g.addColorStop(1,`rgba(${c},0)`);
+    cx.fillStyle=g; cx.beginPath(); cx.moveTo(x-10,H); cx.lineTo(x+Math.sin(ang)*H-120,0); cx.lineTo(x+Math.sin(ang)*H+120,0); cx.lineTo(x+10,H); cx.fill();
+  });
+  stars.forEach(s=>{s.y-=s.s; if(s.y<0){s.y=H;s.x=Math.random()*W;}
+    cx.fillStyle=`rgba(255,255,255,${.4+.6*Math.abs(Math.sin(t/700+s.p))})`; cx.beginPath(); cx.arc(s.x,s.y,s.r,0,7); cx.fill();});
+  requestAnimationFrame(draw);
+}
+requestAnimationFrame(draw);
+
+renderLineup(); renderTT();
+</script>
+
+<!-- GBase AI Bot: MusicFes Navigator AI -->
+<script>
+  window.gptbaseConfig = {
+    chatbotId: 'bf815ada-ad2d-4cf7-a935-66bb22a456d1',
+    baseUrl: 'https://admin.gbase.ai',
+    apiBaseUrl: 'https://admin.gbase.ai/api',
+  };
+</script>
+<script
+  src="https://gbase.ai/plugin/plugin.js"
+  id="bf815ada-ad2d-4cf7-a935-66bb22a456d1"
+  defer>
+</script>
+</body>
+</html>
