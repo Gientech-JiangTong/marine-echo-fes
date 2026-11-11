@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>STARLIGHT ECHO FES 2027</title>
+<title>MARINE ECHO FES 2027</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Righteous&family=Lilita+One&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0d0b1f; --bg2:#16133a; --card:#1e1a4a; --line:#2f2a6b;
-  --text:#f5f3ff; --muted:#a9a3d6;
-  --pink:#ff3d8b; --yellow:#ffd23f; --cyan:#22e4ff; --green:#5dff9d; --orange:#ff8a3d;
+  --bg:#04223f; --bg2:#06345c; --card:#0a4373; --line:#1b5f93;
+  --text:#f2fbff; --muted:#9cc9e6;
+  --pink:#ef4f5a; --yellow:#ffd54a; --cyan:#2ee6d6; --green:#7ff0c0; --orange:#ffa95a; /* 海の日: coral / sunshine / turquoise / seafoam / sunset sand */
   --radius:18px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -21,32 +21,44 @@ a{color:inherit;text-decoration:none}
 .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
 
 /* header */
-header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(13,11,31,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(4,34,63,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
-.logo{font-size:28px;line-height:1;background:linear-gradient(90deg,var(--pink),var(--yellow),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+/* logo: same pairing as the hero title — MARINE (Righteous, thickened) + ECHO (Lilita One, coral gradient) */
+.logo{font-size:26px;line-height:1;display:inline-flex;align-items:baseline;gap:.22em}
+.logo .lm{font-family:"Righteous",sans-serif;color:var(--yellow);-webkit-text-stroke:.04em var(--yellow);paint-order:stroke fill;letter-spacing:.03em}
+.logo .le{font-family:"Lilita One",sans-serif;letter-spacing:.02em;background:linear-gradient(90deg,var(--pink),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.04em}
 nav ul{display:flex;gap:26px;list-style:none}
 nav a{font-size:20px;color:var(--muted);transition:.2s}
 nav a:hover{color:var(--yellow)}
-.btn{display:inline-block;padding:10px 22px;border-radius:999px;font-weight:900;background:var(--pink);color:#fff;transition:.2s;border:none;cursor:pointer;font-family:inherit;font-size:15px}
-.btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,61,139,.45)}
+.btn{display:inline-block;padding:10px 22px;border-radius:999px;font-weight:900;background:#d63a48;color:#fff; /* deeper coral: white text ≥4.5:1 */transition:.2s;border:none;cursor:pointer;font-family:inherit;font-size:15px}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(239,79,90,.45)}
 .btn.ghost{background:transparent;border:2px solid var(--text)}
 .menu-btn{display:none;background:none;border:none;color:var(--text);font-size:28px;cursor:pointer}
 
 /* hero */
-.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:110px 0 60px}
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:110px 0 60px;
+  background:linear-gradient(180deg,#0a6fb8 0%,#075594 30%,#05396a 65%,var(--bg) 100%)} /* 海の日: sunlit surface → deep sea */
 .hero canvas{position:absolute;inset:0;width:100%;height:100%}
 .hero::after{content:"";position:absolute;inset:auto 0 0 0;height:200px;background:linear-gradient(transparent,var(--bg))}
 .hero .wrap{position:relative;z-index:2;text-align:center;width:100%}
 .hero .tag{display:inline-block;padding:4px 16px;border:1px solid var(--cyan);color:var(--cyan);border-radius:999px;font-size:14px;margin-bottom:18px}
-.hero h1{font-size:clamp(64px,13vw,170px);line-height:.88;font-weight:400}
-.hero h1 span{display:block}
-.hero h1 .l1{color:var(--yellow)}
-.hero h1 .l2{background:linear-gradient(90deg,var(--pink),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero h1 .l3{font-size:.45em;color:var(--cyan)}
-.hero .date{font-size:clamp(26px,4vw,44px);margin-top:18px}
-.hero .venue{color:var(--muted);margin-top:4px}
+/* title: MARINE = Righteous (thickened with a same-colour stroke, it has no bold weight),
+   ECHO FES / 2027 = Lilita One. fitTitle() (JS) sizes MARINE so both lines are exactly the same width,
+   which makes MARINE's letters larger. Each line bobs gently like on a wave. */
+.hero h1{font-family:"Lilita One",sans-serif;font-weight:400;font-size:clamp(56px,11vw,150px);line-height:.95;filter:drop-shadow(0 6px 0 rgba(4,34,63,.35))} /* drop-shadow, not text-shadow: keeps the gradient line bright */
+.hero h1 span{display:block;width:max-content;margin:0 auto;animation:bob 4s ease-in-out infinite}
+.hero h1 .l1{font-family:"Righteous",sans-serif;color:var(--yellow);-webkit-text-stroke:.045em var(--yellow);paint-order:stroke fill;letter-spacing:.03em;line-height:.9}
+.hero h1 .l2{letter-spacing:.02em;background:linear-gradient(90deg,var(--pink),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent;animation-delay:-1.3s}
+.hero h1 .l3{font-size:.45em;color:var(--cyan);letter-spacing:.08em;margin-top:.12em;animation-delay:-2.6s}
+@keyframes bob{50%{transform:translateY(-8px) rotate(-1deg)}}
+@media (prefers-reduced-motion:reduce){.hero h1 span{animation:none}}
+/* dates: plain Japanese notation, weekday in smaller parentheses */
+.hero .date{font-family:"Noto Sans JP",sans-serif;font-weight:900;font-size:clamp(24px,3.6vw,40px);line-height:1.3;margin-top:22px;letter-spacing:.01em}
+.hero .date small{font-size:.55em;font-weight:700;margin:0 .1em}
+.hero .date span{white-space:nowrap}
+.hero .venue{color:var(--muted);margin-top:14px}
 .countdown{display:flex;justify-content:center;gap:14px;margin:32px 0}
-.countdown div{background:rgba(30,26,74,.75);border:1px solid var(--line);border-radius:14px;padding:10px 0;width:88px}
+.countdown div{background:rgba(10,67,115,.75);border:1px solid var(--line);border-radius:14px;padding:10px 0;width:88px}
 .countdown b{display:block;font-size:44px;line-height:1;font-family:"Bebas Neue";color:var(--yellow)}
 .countdown small{color:var(--muted);font-size:12px}
 .hero .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
@@ -97,7 +109,7 @@ section{padding:90px 0}
 .tt .col{position:relative;border-left:1px solid var(--line)}
 .tt .times{position:relative}
 .tt .times span{position:absolute;left:0;right:0;text-align:center;font-family:"Bebas Neue";font-size:18px;color:var(--muted);transform:translateY(-50%)}
-.tt .hour-line{position:absolute;left:0;right:0;border-top:1px dashed rgba(169,163,214,.15)}
+.tt .hour-line{position:absolute;left:0;right:0;border-top:1px dashed rgba(156,201,230,.15)}
 .slot{position:absolute;left:6px;right:6px;border-radius:10px;padding:6px 10px;color:var(--bg);cursor:pointer;overflow:hidden;transition:.15s;border:2px solid transparent}
 .slot:hover{filter:brightness(1.1);transform:scale(1.02)}
 .slot .t{font-family:"Bebas Neue";font-size:15px;opacity:.75;line-height:1.2}
@@ -158,7 +170,7 @@ section{padding:90px 0}
 .food-img::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.35),transparent 55%),repeating-linear-gradient(45deg,rgba(255,255,255,.06) 0 8px,transparent 8px 16px)}
 .food-img span{font-size:64px;line-height:1;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35));position:relative;transition:.25s}
 .food-card:hover .food-img span{transform:scale(1.12) rotate(-6deg)}
-.food-img .blk{position:absolute;left:8px;top:8px;font-size:11px;font-weight:900;background:rgba(13,11,31,.75);color:#fff;padding:2px 8px;border-radius:6px;filter:none}
+.food-img .blk{position:absolute;left:8px;top:8px;font-size:11px;font-weight:900;background:rgba(4,34,63,.75);color:#fff;padding:2px 8px;border-radius:6px;filter:none}
 .food-body{padding:12px 14px 14px}
 .food-body .shop{font-weight:900;font-size:15px;line-height:1.35}
 .food-body .menu{color:var(--muted);font-size:13px;margin-top:2px}
@@ -200,7 +212,7 @@ section{padding:90px 0}
 .modal p{color:var(--muted);font-size:14px}
 
 footer{border-top:1px solid var(--line);padding:40px 0;text-align:center;color:var(--muted);font-size:13px}
-footer .logo{font-size:40px;display:inline-block;margin-bottom:8px}
+footer .logo{font-size:36px;margin-bottom:8px}
 
 /* GBase bot: split-screen side panel (desktop only, toggled by JS below).
    Default is the normal floating overlay; the user switches with #botModeBtn
@@ -210,8 +222,8 @@ body,header{transition:margin-right .25s,right .25s}
 html.bot-dragging body,html.bot-dragging header{transition:none}
 html.bot-dragging,html.bot-dragging *{cursor:col-resize!important;user-select:none}
 html.bot-dragging #gptbase-bubble-window{pointer-events:none}
-#botModeBtn{position:fixed;z-index:1000000000;padding:7px 12px;border-radius:999px;border:1px solid #a78bfa;background:#7c3aed;color:#fff;font:700 12px "Noto Sans JP",system-ui,sans-serif;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.4);white-space:nowrap;transition:border-color .15s}
-#botModeBtn:hover,#botModeBtn:focus-visible{border-color:#fff;background:#6d28d9;outline:none}
+#botModeBtn{position:fixed;z-index:1000000000;padding:7px 12px;border-radius:999px;border:1px solid #7cc4f5;background:#0b74c4;color:#fff;font:700 12px "Noto Sans JP",system-ui,sans-serif;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.4);white-space:nowrap;transition:border-color .15s}
+#botModeBtn:hover,#botModeBtn:focus-visible{border-color:#fff;background:#095f9f;outline:none}
 #botModeBtn[hidden]{display:none}
 #botResizer{display:none;position:fixed;top:0;bottom:0;right:var(--bot-w);width:14px;margin-right:-7px;cursor:col-resize;z-index:1000000000;touch-action:none}
 #botResizer::after{content:"";position:absolute;left:6px;top:0;bottom:0;width:2px;background:transparent;transition:background .15s}
@@ -221,8 +233,8 @@ html.bot-dragging #gptbase-bubble-window{pointer-events:none}
 html.bot-split #botResizer{display:block}
 /* overlay mode (wide screens): keep the floating window below the header, user-resizable from its top-left corner */
 html.bot-overlay #gptbase-bubble-window{width:var(--bot-ow)!important;height:var(--bot-oh)!important;max-height:none!important}
-#botCorner{display:none;position:fixed;width:22px;height:22px;z-index:1000000001;cursor:nwse-resize;touch-action:none;border-radius:50%;background:#7c3aed;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.4);color:#fff;font-size:12px;line-height:18px;text-align:center}
-#botCorner:hover,#botCorner:focus-visible{background:#6d28d9;outline:none;transform:scale(1.1)}
+#botCorner{display:none;position:fixed;width:22px;height:22px;z-index:1000000001;cursor:nwse-resize;touch-action:none;border-radius:50%;background:#0b74c4;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.4);color:#fff;font-size:12px;line-height:18px;text-align:center}
+#botCorner:hover,#botCorner:focus-visible{background:#095f9f;outline:none;transform:scale(1.1)}
 html.bot-overlay #botCorner{display:block}
 html.bot-dragging.bot-overlay,html.bot-dragging.bot-overlay *{cursor:nwse-resize!important}
 html.bot-split body{margin-right:var(--bot-w)}
@@ -269,7 +281,7 @@ html.bot-split #gptbase-message-bubbles{display:none!important}
 
 <header>
   <div class="wrap">
-    <a href="#top" class="logo en">STARLIGHT ECHO</a>
+    <a href="#top" class="logo" aria-label="MARINE ECHO"><span class="lm">MARINE</span><span class="le">ECHO</span></a>
     <nav id="nav"><ul>
       <li><a class="en" href="#news">NEWS</a></li>
       <li><a class="en" href="#lineup">LINE UP</a></li>
@@ -289,8 +301,8 @@ html.bot-split #gptbase-message-bubbles{display:none!important}
   <canvas id="stars"></canvas>
   <div class="wrap">
     <div class="tag">OUTDOOR MUSIC FESTIVAL IN CHIBA · 第3回</div>
-    <h1 class="en"><span class="l1">STARLIGHT</span><span class="l2">ECHO FES</span><span class="l3">2027</span></h1>
-    <div class="date en">2027.7.17 SAT — 7.19 MON</div>
+    <h1><span class="l1">MARINE</span><span class="l2">ECHO FES</span><span class="l3">2027</span></h1>
+    <div class="date"><span>2027年7月17日<small>（土）</small>・</span><span>18日<small>（日）</small>・</span><span>19日<small>（月・祝）</small></span></div>
     <div class="venue">千葉市蘇我スポーツ公園（千葉県千葉市中央区）｜ 雨天決行</div>
     <div class="countdown" id="countdown">
       <div><b id="cd-d">--</b><small>DAYS</small></div>
@@ -345,36 +357,38 @@ html.bot-split #gptbase-message-bubbles{display:none!important}
     <div class="access">
       <div class="map">
         <svg viewBox="0 0 600 420" aria-label="会場マップ">
-          <rect width="600" height="420" fill="#0d0b1f" rx="12"/>
+          <rect width="600" height="420" fill="#04223f" rx="12"/>
           <!-- Tokyo Bay -->
-          <path d="M0 12 Q0 0 12 0 L70 0 C60 120 85 260 62 420 L12 420 Q0 420 0 408Z" fill="#163a6e"/>
-          <text x="30" y="215" text-anchor="middle" font-size="14" fill="#7fb6ff" writing-mode="tb" letter-spacing="6">東京湾</text>
+          <path d="M0 12 Q0 0 12 0 L70 0 C60 120 85 260 62 420 L12 420 Q0 420 0 408Z" fill="#0b5aa0"/>
+          <text x="30" y="215" text-anchor="middle" font-size="14" fill="#bfe6ff" writing-mode="tb" letter-spacing="6">東京湾</text>
+          <!-- beach -->
+          <path d="M70 0 C60 120 85 260 62 420 L84 420 C104 260 80 120 92 0Z" fill="#f1dca7" opacity=".85"/>
           <!-- Park -->
-          <rect x="82" y="22" width="430" height="376" rx="22" fill="#1d3b33" stroke="#3f7a5f" stroke-width="2"/>
+          <rect x="82" y="22" width="430" height="376" rx="22" fill="#1f5a4a" stroke="#4fa58a" stroke-width="2"/>
           <text x="297" y="44" text-anchor="middle" font-size="12" fill="#8fd1ad">千葉市蘇我スポーツ公園</text>
           <!-- walkways (drawn under the areas): gate → GOODS & CLOAK → FOOD PARK hub → 4 stages, plus stage-to-stage links -->
           <g fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="#d8cfa0" stroke-width="13" opacity=".32" d="M494 246 L471 222 M440 190 C400 196 360 206 318 206 M240 184 L212 146 M292 184 L338 136 M240 228 L202 272 M292 228 L334 276 M260 102 L300 100 M238 310 L300 310 M488 280 C460 300 440 310 422 310"/>
-            <path stroke="#f5f3ff" stroke-width="1.5" stroke-dasharray="3 5" opacity=".45" d="M494 246 L471 222 M440 190 C400 196 360 206 318 206 M240 184 L212 146 M292 184 L338 136 M240 228 L202 272 M292 228 L334 276 M260 102 L300 100 M238 310 L300 310 M488 280 C460 300 440 310 422 310"/>
+            <path stroke="#f2fbff" stroke-width="1.5" stroke-dasharray="3 5" opacity=".45" d="M494 246 L471 222 M440 190 C400 196 360 206 318 206 M240 184 L212 146 M292 184 L338 136 M240 228 L202 272 M292 228 L334 276 M260 102 L300 100 M238 310 L300 310 M488 280 C460 300 440 310 422 310"/>
           </g>
           <!-- stages (rectangles) -->
-          <g class="zone" data-z="sky"><rect x="104" y="62" width="156" height="84" rx="6" fill="#ffd23f"/><text x="182" y="106" text-anchor="middle" font-family="Bebas Neue" font-size="24" fill="#0d0b1f">SKY STAGE</text><text x="182" y="124" text-anchor="middle" font-size="10" fill="#0d0b1f">メインステージ</text></g>
-          <g class="zone" data-z="forest"><rect x="300" y="64" width="128" height="72" rx="6" fill="#5dff9d"/><text x="364" y="102" text-anchor="middle" font-family="Bebas Neue" font-size="20" fill="#0d0b1f">FOREST STAGE</text><text x="364" y="119" text-anchor="middle" font-size="10" fill="#0d0b1f">森のステージ</text></g>
-          <g class="zone" data-z="ocean"><rect x="104" y="272" width="134" height="76" rx="6" fill="#22e4ff"/><text x="171" y="311" text-anchor="middle" font-family="Bebas Neue" font-size="20" fill="#0d0b1f">OCEAN STAGE</text><text x="171" y="328" text-anchor="middle" font-size="10" fill="#0d0b1f">海辺のステージ</text></g>
-          <g class="zone" data-z="moon"><rect x="300" y="276" width="122" height="68" rx="6" fill="#ff3d8b"/><text x="361" y="312" text-anchor="middle" font-family="Bebas Neue" font-size="20" fill="#fff">MOON TENT</text><text x="361" y="328" text-anchor="middle" font-size="10" fill="#fff">夜のテント</text></g>
+          <g class="zone" data-z="sky"><rect x="104" y="62" width="156" height="84" rx="6" fill="#ffd54a"/><text x="182" y="106" text-anchor="middle" font-family="Bebas Neue" font-size="24" fill="#04223f">SKY STAGE</text><text x="182" y="124" text-anchor="middle" font-size="10" fill="#04223f">メインステージ</text></g>
+          <g class="zone" data-z="forest"><rect x="300" y="64" width="128" height="72" rx="6" fill="#7ff0c0"/><text x="364" y="102" text-anchor="middle" font-family="Bebas Neue" font-size="20" fill="#04223f">FOREST STAGE</text><text x="364" y="119" text-anchor="middle" font-size="10" fill="#04223f">森のステージ</text></g>
+          <g class="zone" data-z="ocean"><rect x="104" y="272" width="134" height="76" rx="6" fill="#2ee6d6"/><text x="171" y="311" text-anchor="middle" font-family="Bebas Neue" font-size="20" fill="#04223f">OCEAN STAGE</text><text x="171" y="328" text-anchor="middle" font-size="10" fill="#04223f">海辺のステージ</text></g>
+          <g class="zone" data-z="moon"><rect x="300" y="276" width="122" height="68" rx="6" fill="#ef4f5a"/><text x="361" y="312" text-anchor="middle" font-family="Bebas Neue" font-size="20" fill="#fff">MOON TENT</text><text x="361" y="328" text-anchor="middle" font-size="10" fill="#fff">夜のテント</text></g>
           <!-- FOOD PARK: hub in the middle of the four stages -->
-          <g class="zone" data-z="food"><rect x="214" y="184" width="104" height="44" rx="10" fill="#ff8a3d"/><text x="266" y="211" text-anchor="middle" font-family="Bebas Neue" font-size="19" fill="#0d0b1f">FOOD PARK</text></g>
+          <g class="zone" data-z="food"><rect x="214" y="184" width="104" height="44" rx="10" fill="#ffa95a"/><text x="266" y="211" text-anchor="middle" font-family="Bebas Neue" font-size="19" fill="#04223f">FOOD PARK</text></g>
           <!-- GOODS & CLOAK: one area right inside the entry gate -->
-          <g class="zone" data-z="gc"><rect x="434" y="152" width="70" height="70" rx="8" fill="#b18cff"/><text x="469" y="183" text-anchor="middle" font-family="Bebas Neue" font-size="17" fill="#0d0b1f">GOODS &amp;</text><text x="469" y="202" text-anchor="middle" font-family="Bebas Neue" font-size="17" fill="#0d0b1f">CLOAK</text></g>
-          <g class="zone" data-z="gate"><rect x="468" y="246" width="88" height="34" rx="8" fill="#f5f3ff"/><text x="512" y="269" text-anchor="middle" font-family="Bebas Neue" font-size="18" fill="#0d0b1f">ENTRY GATE</text></g>
+          <g class="zone" data-z="gc"><rect x="434" y="152" width="70" height="70" rx="8" fill="#9fd3ff"/><text x="469" y="183" text-anchor="middle" font-family="Bebas Neue" font-size="17" fill="#04223f">GOODS &amp;</text><text x="469" y="202" text-anchor="middle" font-family="Bebas Neue" font-size="17" fill="#04223f">CLOAK</text></g>
+          <g class="zone" data-z="gate"><rect x="468" y="246" width="88" height="34" rx="8" fill="#f2fbff"/><text x="512" y="269" text-anchor="middle" font-family="Bebas Neue" font-size="18" fill="#04223f">ENTRY GATE</text></g>
           <!-- legend -->
           <line x1="98" y1="378" x2="122" y2="378" stroke="#d8cfa0" stroke-width="8" stroke-linecap="round" opacity=".45"/>
           <text x="130" y="382" font-size="11" fill="#8fd1ad">通路</text>
           <!-- outside -->
-          <g class="zone" data-z="parking"><rect x="524" y="30" width="66" height="44" rx="8" fill="#2f2a6b" stroke="#a9a3d6"/><text x="557" y="58" text-anchor="middle" font-size="13" font-weight="700" fill="#f5f3ff">P 駐車場</text></g>
-          <path d="M557 74 C562 150 548 220 530 246" stroke="#a9a3d6" stroke-width="2" stroke-dasharray="4 5" fill="none" opacity=".7"/>
-          <path d="M556 364 C552 330 534 300 522 280" stroke="#ffd23f" stroke-width="3" stroke-dasharray="4 5" fill="none"/>
-          <g class="zone" data-z="station"><rect x="526" y="364" width="66" height="44" rx="8" fill="#ffd23f"/><text x="559" y="384" text-anchor="middle" font-size="12" font-weight="900" fill="#0d0b1f">JR蘇我駅</text><text x="559" y="400" text-anchor="middle" font-size="10" fill="#0d0b1f">徒歩約15分</text></g>
+          <g class="zone" data-z="parking"><rect x="524" y="30" width="66" height="44" rx="8" fill="#0a4373" stroke="#9cc9e6"/><text x="557" y="58" text-anchor="middle" font-size="13" font-weight="700" fill="#f2fbff">P 駐車場</text></g>
+          <path d="M557 74 C562 150 548 220 530 246" stroke="#9cc9e6" stroke-width="2" stroke-dasharray="4 5" fill="none" opacity=".7"/>
+          <path d="M556 364 C552 330 534 300 522 280" stroke="#ffd54a" stroke-width="3" stroke-dasharray="4 5" fill="none"/>
+          <g class="zone" data-z="station"><rect x="526" y="364" width="66" height="44" rx="8" fill="#ffd54a"/><text x="559" y="384" text-anchor="middle" font-size="12" font-weight="900" fill="#04223f">JR蘇我駅</text><text x="559" y="400" text-anchor="middle" font-size="10" fill="#04223f">徒歩約15分</text></g>
         </svg>
       </div>
       <div class="info">
@@ -423,7 +437,7 @@ html.bot-split #gptbase-message-bubbles{display:none!important}
   <div class="wrap">
     <div class="sec-title"><h2 class="en">ALL INFO</h2><p>全情報まとめ（テキスト版）</p></div>
     <p class="tv-lead">このページのすべての情報をテキストでまとめています（音声読み上げ・検索・AIアシスタント向け）。</p>
-    <article><h3>開催概要</h3><ul><li>名称：STARLIGHT ECHO FES 2027（第3回・千葉の野外音楽フェス）</li><li>日程：2027年7月17日（土）・18日（日）・19日（月・海の日）の3日間</li><li>会場：千葉市蘇我スポーツ公園（千葉県千葉市中央区）</li><li>時間：各日 開場 9:00 ／ 開演 11:00 ／ 終演 21:00（予定）</li><li>天候：雨天決行（荒天の場合は中止になることがあります）</li><li>ステージ：SKY STAGE ／ OCEAN STAGE ／ FOREST STAGE ／ MOON TENT の4ステージ</li><li>※本サイトは架空の音楽フェスのデモです。アーティスト・料金・店舗はすべて架空で、実際の購入・決済は発生しません。</li></ul></article>
+    <article><h3>開催概要</h3><ul><li>名称：MARINE ECHO FES 2027（マリンエコー・フェス／第3回・千葉の野外音楽フェス）</li><li>名称の由来：最終日の7月19日が「海の日」（英語で Marine Day）であることから、海辺の会場に音楽が響く（ECHO）フェスとして命名</li><li>日程：2027年7月17日（土）・18日（日）・19日（月・海の日）の3日間</li><li>会場：千葉市蘇我スポーツ公園（千葉県千葉市中央区）</li><li>時間：各日 開場 9:00 ／ 開演 11:00 ／ 終演 21:00（予定）</li><li>天候：雨天決行（荒天の場合は中止になることがあります）</li><li>ステージ：SKY STAGE ／ OCEAN STAGE ／ FOREST STAGE ／ MOON TENT の4ステージ</li><li>※本サイトは架空の音楽フェスのデモです。アーティスト・料金・店舗はすべて架空で、実際の購入・決済は発生しません。</li></ul></article>
     <article><h3>アクセス（会場までの行き方・交通案内）</h3>
   <p>蘇我駅から会場（千葉市蘇我スポーツ公園）までの行き方：JR「蘇我駅」の西口を出て、会場まで徒歩約15分です。会場への行き方・アクセス方法・最寄り駅・交通手段は以下のとおりです。</p><ul><li>最寄り駅：JR「蘇我駅」（京葉線・内房線・外房線）</li><li>電車：JR京葉線・内房線・外房線「蘇我駅」西口から徒歩約15分</li><li>バス：JR「千葉駅」から臨時シャトルバス運行予定（有料）</li><li>お車：駐車券の事前購入が必要（当日販売なし）。公共交通機関のご利用にご協力ください</li><li>帰りは蘇我駅が大変混雑します。時間に余裕を持ってご移動ください</li></ul></article>
     <article><h3>チケット（税込）</h3><div class="tv-table"><table><thead><tr><th>券種</th><th>内容</th><th>価格</th><th>特典・備考</th></tr></thead><tbody><tr><td>3-DAY PASS</td><td>3日通し券</td><td>¥36,000</td><td>3日間 全ステージ入場／当日再入場OK（リストバンド制）／通し券限定ラバーバンド付き（先行受付中）</td></tr><tr><td>1-DAY PASS</td><td>1日券（日付指定）</td><td>¥13,500</td><td>当日 全ステージ入場／当日再入場OK（リストバンド制）</td></tr><tr><td>PREMIUM</td><td>プレミアムエリア付き1日券</td><td>¥22,000</td><td>1日券の全特典／専用休憩テント・専用トイレ／SKY STAGE 横の専用観覧エリア（数量限定）</td></tr><tr><td>PARKING</td><td>駐車券（1日・1台）</td><td>¥4,000</td><td>会場周辺の指定駐車場を利用可／事前購入制（当日販売なし）／別途入場チケットが必要</td></tr></tbody></table></div>
@@ -440,15 +454,15 @@ html.bot-split #gptbase-message-bubbles{display:none!important}
     <article><h3>注意事項</h3><h4>特に重要なお願い</h4><ul><li>ダイブ、サークル、モッシュなどの危険行為は禁止です。ダイブを行った方はその時点で退場となり、チケットの払い戻しは行いません。</li><li>フェス中止の場合を除き、チケットの払い戻しは行いません（体調不良・出演者の変更・退場処分などの場合も含みます）。</li><li>アーティストの撮影・録画・録音（リハーサル中を含む）および会場内からの生配信は禁止です。発覚した場合はデータを消去していただきます。</li></ul>
   <h4>チケット／入場について</h4><ul><li>チケット1枚につき1名様のみ有効です。複数名での使用はできません。</li><li>小学生以下のお子様は保護者同伴に限り入場無料です（保護者の方はチケットが必要です）。</li><li>チケットの不正転売・譲渡は禁止です。入場時に顔写真付きの公的身分証明書（原本）で本人確認を行います。</li><li>入場ゲートと蘇我駅の混雑緩和のため、入場時間指定制を予定しています。指定された時間にご来場ください。</li><li>ペットを連れての入場はできません（補助犬を除く）。</li></ul><h4>持ち物／持ち込みについて</h4><ul><li>持ち込み禁止：ビン・缶、花火などの火薬類、自転車・キックボードなどの乗り物（車椅子・ベビーカーを除く）、自撮り棒、ドローン、ハードタイプのクーラーボックス、キャリーカート、テント・タープ・パラソル・イス、望遠レンズ付きの業務用撮影機材など。</li><li>飲み物はペットボトル・水筒のみ持ち込めます。ステージへの投げ込みは絶対におやめください。</li><li>各ステージエリアと GOODS &amp; CLOAK エリアへの食べ物の持ち込みはできません。お食事は FOOD PARK をご利用ください。</li><li>レジャーシートは指定エリアのみ使用可能です（2m×2m 以内を推奨）。荷物を置いたままの場所取りは撤去の対象となります。</li><li>うちわ・ボードは胸の高さより上に掲げないでください。後ろの方の視界にご配慮ください。</li></ul><h4>会場内／ステージについて</h4><ul><li>会場内は喫煙所以外すべて禁煙です（電子たばこ・加熱式たばこを含む）。</li><li>傘（日傘を含む）はライブ観覧中・移動中は使用できません。休憩中や待機列ではご使用いただけます。</li><li>ベンチ・テーブルの場所取りや座り込みはご遠慮ください。</li><li>混雑時のベビーカーのご使用はご遠慮ください。</li><li>7月の開催のため熱中症にご注意ください。帽子・タオルを用意し、こまめに水分と塩分を補給してください。体調が悪くなったら近くのスタッフにお声がけください。</li></ul><h4>会場外について</h4><ul><li>お車は駐車券を事前購入した方のみ指定駐車場をご利用いただけます。周辺施設への無断駐車が発覚した場合は、入場をお断りすることがあります。</li><li>会場周辺での野宿・路上喫煙など、近隣の方の迷惑となる行為はおやめください。</li></ul><h4>その他</h4><ul><li>スタッフの注意や指示に従わない方には退場していただく場合があります。</li><li>会場内外での事故・盗難、参加者同士のトラブルについて、主催者は責任を負いかねます。</li><li>客席を含む会場内の映像・写真が公開されることがあります。</li><li>※本サイトは架空の音楽フェスのデモページです。</li></ul></article>
     <article><h3>よくある質問（FAQ）</h3><dl><dt>Q. 雨が降っても開催しますか？</dt><dd>A. 雨天決行です（荒天の場合は中止になることがあります）。レインコートをお持ちください。周りの方の視界を遮るため、傘のご使用はご遠慮ください。</dd><dt>Q. 再入場はできますか？</dt><dd>A. リストバンドを着用していれば、当日に限り何度でも再入場できます。</dd><dt>Q. 会場までどうやって行けばいいですか？</dt><dd>A. JR「蘇我駅」西口から徒歩約15分です。千葉駅から臨時シャトルバスも運行予定です。お車の場合は駐車券の事前購入が必要です。</dd><dt>Q. 子どもも入場できますか？</dt><dd>A. 小学生以下は保護者同伴に限り入場無料です（中学生以上はチケットが必要です）。</dd><dt>Q. 飲食物の持ち込みはできますか？</dt><dd>A. ペットボトル・水筒のみ持ち込み可能です。お食事は会場内の FOOD PARK をご利用ください。</dd><dt>Q. チケットの払い戻しはできますか？</dt><dd>A. 本サイトは架空のフェスのデモページのため、実際の購入・決済は一切発生しません。</dd></dl></article>
-    <article><h3>最新ニュース</h3><ul><li>2026.11.10【TICKET】3日通し券・1日券 オフィシャル先行受付スタート！</li><li>2026.11.05【LINE UP】出演アーティスト第3弾発表：CRIMSON VELOCITY、STARLIGHT ALL STARS ほか12組が決定</li><li>2026.10.28【INFO】会場アクセス情報公開：JR蘇我駅からの徒歩ルート＆千葉駅発シャトルバス</li><li>2026.10.20【GOODS】オフィシャルグッズ第1弾：フェスTシャツ・タオル・ラバーバンドの事前通販スタート</li><li>2026.10.15【LINE UP】出演アーティスト第2弾発表：初日のトリは NEON PARADOX に決定</li><li>2026.10.01【LINE UP】STARLIGHT ECHO FES 2027 千葉市蘇我スポーツ公園にて開催決定！</li></ul></article>
+    <article><h3>最新ニュース</h3><ul><li>2026.11.10【TICKET】3日通し券・1日券 オフィシャル先行受付スタート！</li><li>2026.11.05【LINE UP】出演アーティスト第3弾発表：CRIMSON VELOCITY、STARLIGHT ALL STARS ほか12組が決定</li><li>2026.10.28【INFO】会場アクセス情報公開：JR蘇我駅からの徒歩ルート＆千葉駅発シャトルバス</li><li>2026.10.20【GOODS】オフィシャルグッズ第1弾：フェスTシャツ・タオル・ラバーバンドの事前通販スタート</li><li>2026.10.15【LINE UP】出演アーティスト第2弾発表：初日のトリは NEON PARADOX に決定</li><li>2026.10.01【LINE UP】MARINE ECHO FES 2027 千葉市蘇我スポーツ公園にて開催決定！</li></ul></article>
   </div>
 </section>
 <!-- TEXTVER:END -->
 
 <footer>
-  <div class="logo en">STARLIGHT ECHO FES 2027</div>
+  <div class="logo" aria-label="MARINE ECHO FES 2027"><span class="lm">MARINE</span><span class="le">ECHO FES 2027</span></div>
   <p>本サイトは架空の音楽フェスのデモページです。アーティスト・料金・イベント内容はすべて架空のもので、実在の会場・団体とは関係ありません。</p>
-  <p class="en" style="margin-top:6px;font-size:16px">© 2027 STARLIGHT ECHO PROJECT</p>
+  <p class="en" style="margin-top:6px;font-size:16px">© 2027 MARINE ECHO PROJECT</p>
 </footer>
 
 <div class="modal" id="modal">
@@ -467,10 +481,10 @@ const DAYS = [
   {id:'d3', label:'7.19', dow:'MON'},
 ];
 const STAGES = [
-  {id:'sky',    name:'SKY STAGE',    sub:'メインステージ', color:'#ffd23f'},
-  {id:'ocean',  name:'OCEAN STAGE',  sub:'海辺のステージ', color:'#22e4ff'},
-  {id:'forest', name:'FOREST STAGE', sub:'森のステージ',   color:'#5dff9d'},
-  {id:'moon',   name:'MOON TENT',    sub:'夜のテント',     color:'#ff3d8b'},
+  {id:'sky',    name:'SKY STAGE',    sub:'メインステージ', color:'#ffd54a'},
+  {id:'ocean',  name:'OCEAN STAGE',  sub:'海辺のステージ', color:'#2ee6d6'},
+  {id:'forest', name:'FOREST STAGE', sub:'森のステージ',   color:'#7ff0c0'},
+  {id:'moon',   name:'MOON TENT',    sub:'夜のテント',     color:'#ef4f5a'},
 ];
 const GENRES = ['Rock','Pop','Electro','Hip-Hop','Indie','City Pop','Metal','Punk','Jazz Fusion','Shoegaze','J-Pop','Dream Pop'];
 // [name, stage, start, end, tier]  tier 1=headliner 2=mid 3=low
@@ -500,7 +514,7 @@ const NEWS = [
   ['2026.10.28','in','会場アクセス情報公開：JR蘇我駅からの徒歩ルート＆千葉駅発シャトルバス'],
   ['2026.10.20','gd','オフィシャルグッズ第1弾：フェスTシャツ・タオル・ラバーバンドの事前通販スタート'],
   ['2026.10.15','la','出演アーティスト第2弾発表：初日のトリは NEON PARADOX に決定'],
-  ['2026.10.01','la','STARLIGHT ECHO FES 2027 千葉市蘇我スポーツ公園にて開催決定！'],
+  ['2026.10.01','la','MARINE ECHO FES 2027 千葉市蘇我スポーツ公園にて開催決定！'],
 ];
 const TICKETS = [
   {name:'3-DAY PASS',sub:'3日通し券',price:'36,000',c:'var(--pink)',badge:'先行受付中',items:['3日間 全ステージ入場','当日再入場OK（リストバンド制）','通し券限定ラバーバンド付き']},
@@ -531,9 +545,9 @@ const FAQ = [
 /* FOOD PARK shops (all fictional). [shop, category, emoji, menu, price, tags, description]
    tags: chiba=千葉ご当地 hot=辛い veg=ベジ pop=人気 adult=20歳以上 */
 const FOOD_CATS = [
-  {id:'all',name:'すべて'},{id:'men',name:'🍜 麺',c:'#ff8a3d'},{id:'rice',name:'🍚 ごはん',c:'#ffd23f'},
-  {id:'meat',name:'🍖 肉・串',c:'#ff5d5d'},{id:'kona',name:'🐙 粉もの',c:'#c98a4b'},{id:'chiba',name:'🥜 千葉ご当地',c:'#5dff9d'},
-  {id:'world',name:'🌏 世界のグルメ',c:'#22e4ff'},{id:'sweets',name:'🍧 スイーツ',c:'#ff9ad5'},{id:'drink',name:'🥤 ドリンク',c:'#b18cff'},
+  {id:'all',name:'すべて'},{id:'men',name:'🍜 麺',c:'#ffa95a'},{id:'rice',name:'🍚 ごはん',c:'#ffd54a'},
+  {id:'meat',name:'🍖 肉・串',c:'#ff5d5d'},{id:'kona',name:'🐙 粉もの',c:'#c98a4b'},{id:'chiba',name:'🥜 千葉ご当地',c:'#7ff0c0'},
+  {id:'world',name:'🌏 世界のグルメ',c:'#2ee6d6'},{id:'sweets',name:'🍧 スイーツ',c:'#ff9ad5'},{id:'drink',name:'🥤 ドリンク',c:'#9fd3ff'},
 ];
 const FOODS = [
   ['麺屋 ほしあかり','men','🍜','星空醤油ラーメン',900,['pop'],'鶏ガラと煮干しのWスープ。海苔に星形の焼き印入り。'],
@@ -638,6 +652,17 @@ const saveFavs = () => { try{ localStorage.setItem('sef-favs', JSON.stringify([.
 const keyOf = (d,a) => `${d}|${a[0]}`;
 function hash(str){let h=0;for(const c of str)h=(h*31+c.charCodeAt(0))>>>0;return h;}
 
+/* ===== Title: make MARINE exactly as wide as ECHO FES ===== */
+function fitTitle(){
+  const l1=$('.hero h1 .l1'), l2=$('.hero h1 .l2');
+  l1.style.fontSize='';                                   // back to the base size before measuring
+  const base=parseFloat(getComputedStyle(l1).fontSize);
+  const w1=l1.offsetWidth, w2=l2.offsetWidth;             // layout width (ignores the bob animation's rotate)
+  if(w1 && w2) l1.style.fontSize=(base*w2/w1)+'px';     // width scales linearly with font-size
+}
+document.fonts.ready.then(fitTitle);
+addEventListener('resize',fitTitle);
+
 /* ===== Countdown ===== */
 function tick(){
   let diff = Math.max(0, START - Date.now());
@@ -722,7 +747,7 @@ function openArtist(dayId,name){
   $('#modalBody').innerHTML=`<div class="avatar" style="background:${s.color}">${[...name][0]}</div>
     <h3>${name}</h3>
     <div class="meta">${d.label} ${d.dow} ｜ ${fmt(a[2])} - ${fmt(a[3])} ｜ ${s.name}</div>
-    <p>${yr}年結成の ${g} アーティスト。エネルギッシュなライブパフォーマンスで知られ、今回は STARLIGHT ECHO のためだけの特別なセットリストで蘇我のステージに立ちます。（架空のプロフィールです）</p>
+    <p>${yr}年結成の ${g} アーティスト。エネルギッシュなライブパフォーマンスで知られ、今回は MARINE ECHO のためだけの特別なセットリストで蘇我のステージに立ちます。（架空のプロフィールです）</p>
     <div style="margin-top:18px"><button class="btn" id="addFav">${favs.has(keyOf(dayId,a))?'★ マイタイムテーブルに追加済み':'☆ マイタイムテーブルに追加'}</button></div>`;
   $('#addFav').onclick=()=>{const k=keyOf(dayId,a); favs.has(k)?favs.delete(k):favs.add(k); saveFavs(); renderTT(); openArtist(dayId,name);};
   $('#modal').classList.add('show');
@@ -752,7 +777,7 @@ document.querySelectorAll('.zone').forEach(z=>z.addEventListener('click',()=>{
 /* ===== Food ===== */
 const catOf = id => FOOD_CATS.find(c=>c.id===id);
 const blockOf = i => `${'ABCDE'[Math.floor(i/10)]}-${String(i%10+1).padStart(2,'0')}`; // FOOD PARK block A-01 … E-10
-const foodImg = (f,i) => { const c=catOf(f[1]).c; return `<div class="food-img" style="background:linear-gradient(135deg,${c},${c}66 70%,#1e1a4a)"><span class="blk">${blockOf(i)}</span><span>${f[2]}</span></div>`; };
+const foodImg = (f,i) => { const c=catOf(f[1]).c; return `<div class="food-img" style="background:linear-gradient(135deg,${c},${c}66 70%,#0a4373)"><span class="blk">${blockOf(i)}</span><span>${f[2]}</span></div>`; };
 const tagHtml = tags => tags.length ? `<div class="ftags">${tags.map(t=>`<span class="ftag ${t}">${FTAG[t]}</span>`).join('')}</div>` : '';
 let foodCat='all';
 $('#foodChips').innerHTML = FOOD_CATS.map(c=>`<button class="chip${c.id==='all'?' active':''}" data-c="${c.id}">${c.name}</button>`).join('');
@@ -791,22 +816,33 @@ document.querySelectorAll('#nav a').forEach(a=>a.onclick=()=>$('#nav').classList
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.08});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-/* ===== Starfield + light beams ===== */
-const cv=$('#stars'), cx=cv.getContext('2d'); let W,H,stars=[];
+/* ===== 海の日 hero: sunlight rays from the surface, rising bubbles, waves on top ===== */
+const cv=$('#stars'), cx=cv.getContext('2d'); let W,H,bubbles=[];
 function size(){W=cv.width=cv.offsetWidth*devicePixelRatio;H=cv.height=cv.offsetHeight*devicePixelRatio;
-  stars=Array.from({length:180},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.8*devicePixelRatio,s:Math.random()*.5+.1,p:Math.random()*6}));}
+  bubbles=Array.from({length:90},()=>({x:Math.random()*W,y:Math.random()*H,r:(Math.random()*4+1.5)*devicePixelRatio,s:(Math.random()*.6+.25)*devicePixelRatio,p:Math.random()*6}));}
 size(); addEventListener('resize',size);
-const beamColors=['255,61,139','34,228,255','255,210,63','93,255,157'];
+const rayColors=['255,255,255','255,213,74','46,230,214','191,230,255'];
 function draw(t){
   cx.clearRect(0,0,W,H);
-  beamColors.forEach((c,i)=>{
-    const ang=Math.sin(t/1800+i*1.7)*.5, x=W*(.15+i*.23);
-    const g=cx.createLinearGradient(x,H,x+Math.sin(ang)*H,0);
-    g.addColorStop(0,`rgba(${c},.28)`); g.addColorStop(1,`rgba(${c},0)`);
-    cx.fillStyle=g; cx.beginPath(); cx.moveTo(x-10,H); cx.lineTo(x+Math.sin(ang)*H-120,0); cx.lineTo(x+Math.sin(ang)*H+120,0); cx.lineTo(x+10,H); cx.fill();
+  // sunlight rays fanning down from the surface, swaying slowly
+  rayColors.forEach((c,i)=>{
+    const ang=Math.sin(t/2600+i*1.9)*.35, x=W*(.12+i*.25);
+    const g=cx.createLinearGradient(x,0,x+Math.sin(ang)*H,H);
+    g.addColorStop(0,`rgba(${c},.22)`); g.addColorStop(1,`rgba(${c},0)`);
+    cx.fillStyle=g; cx.beginPath(); cx.moveTo(x-14,0); cx.lineTo(x+Math.sin(ang)*H-140,H); cx.lineTo(x+Math.sin(ang)*H+140,H); cx.lineTo(x+14,0); cx.fill();
   });
-  stars.forEach(s=>{s.y-=s.s; if(s.y<0){s.y=H;s.x=Math.random()*W;}
-    cx.fillStyle=`rgba(255,255,255,${.4+.6*Math.abs(Math.sin(t/700+s.p))})`; cx.beginPath(); cx.arc(s.x,s.y,s.r,0,7); cx.fill();});
+  // wave crests near the surface
+  cx.lineWidth=2*devicePixelRatio;
+  for(let k=0;k<3;k++){
+    cx.strokeStyle=`rgba(255,255,255,${.22-k*.06})`; cx.beginPath();
+    for(let x=0;x<=W;x+=12*devicePixelRatio){const y=(70+k*26)*devicePixelRatio+Math.sin(x/(90*devicePixelRatio)+t/(900+k*300)+k)*8*devicePixelRatio; x?cx.lineTo(x,y):cx.moveTo(x,y);}
+    cx.stroke();
+  }
+  // bubbles drifting up
+  bubbles.forEach(b=>{b.y-=b.s; b.x+=Math.sin(t/800+b.p)*.3; if(b.y<-10){b.y=H+10;b.x=Math.random()*W;}
+    cx.strokeStyle=`rgba(255,255,255,${.35+.35*Math.abs(Math.sin(t/900+b.p))})`; cx.lineWidth=1.2*devicePixelRatio;
+    cx.beginPath(); cx.arc(b.x,b.y,b.r,0,7); cx.stroke();
+    cx.fillStyle='rgba(255,255,255,.5)'; cx.beginPath(); cx.arc(b.x-b.r*.35,b.y-b.r*.35,b.r*.25,0,7); cx.fill();});
   requestAnimationFrame(draw);
 }
 requestAnimationFrame(draw);
